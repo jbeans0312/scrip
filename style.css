@@ -10,6 +10,9 @@
 h1 {
     font-family: 'cra';
 }
+body{
+    font-family: 'cra';
+}
 .col{
     border-style: solid; 
     border-width: 2px; 
@@ -17,7 +20,6 @@ h1 {
     display: flex; 
     flex-direction: column; 
     align-items: left; 
-    min-height:80vh;
 }
 .prod-box{
     display:flex;
@@ -26,3 +28,14 @@ h1 {
     justify-content: center;
     gap: 120px;
 }
+
+.myProgress {
+    width: 100%;
+    background-color: grey;
+  }
+  
+  .myBar {
+    width: 1%;
+    height: 30px;
+    background-color: green;
+  }

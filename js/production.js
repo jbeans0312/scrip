@@ -1,6 +1,6 @@
-var glitter = 1000; // need to change this to call from database
+var glitter = 0; // need to change this to call from database
 var rubber = 0;
-var needle = 1000;
+var needle = 0;
 
 var glitter_factory_count = 0; //generates glitter passively
 var glitter_shredder_count = 0; //turns needles into glitter (toggle on)
@@ -28,6 +28,19 @@ function toggleShredder(){
     shredder_on = !shredder_on;
 }
 /**
+ * VISIBILITY TOGGLE FUNCTIONS
+ * toggleMonitoring
+ */
+var monitoringHidden = true;
+function updateMonitoring(){
+    if(monitoringHidden)
+    {
+        monitoringHidden=false; 
+        var mon = document.getElementById("monitor");
+        mon.style.visibility='visible';
+    }
+}
+/**
  * updateGlitterAmount
  * updateRubberAmount
  * updateNeedleAmount
@@ -35,17 +48,17 @@ function toggleShredder(){
  * Updates the amount of resources when spent, produced, or delivered.
  */
 function updateGlitterAmount(amount){
-    glitter = truncate(glitter + amount);
-    document.getElementById("glitter_amount").innerHTML = "G " + glitter;
+    glitter = glitter + amount;
+    document.getElementById("glitter_amount").innerHTML = "G " + truncate(glitter);
 }
 function updateRubberAmount(amount){
-    rubber = truncate(rubber + amount);
-    document.getElementById("rubber_amount").innerHTML = "R " + rubber;
+    rubber = rubber + amount;
+    document.getElementById("rubber_amount").innerHTML = "R " + truncate(rubber);
 }
 
 function updateNeedleAmount(amount){
-    needle = truncate(needle + amount);
-    document.getElementById("needle_amount").innerHTML = "N " + needle;
+    needle = needle + amount;
+    document.getElementById("needle_amount").innerHTML = "N " + truncate(needle);
 }
 
 /**
@@ -64,6 +77,7 @@ function buyGlitterFactory(amount){
         glitter = glitter - 20*amount;
         document.getElementById("glitter_factory_amount").innerHTML = glitter_factory_count;
         document.getElementById("glitter_amount").innerHTML = "G " + glitter;
+        updateMonitoring();
     }
 }
 
@@ -73,6 +87,7 @@ function buyGlitterShredder(amount){
         glitter = glitter - 500*amount;
         document.getElementById("glitter_shredder_amount").innerHTML = glitter_shredder_count;
         document.getElementById("glitter_amount").innerHTML = "G " + glitter;
+        updateMonitoring();
     }
 }
 
@@ -98,7 +113,28 @@ function sellGlitterFactory(amount){
 setInterval(function(){
     updateGlitterAmount(truncate(glitter_factory_count * 0.0125)); // glitter factory
     if(shredder_on && needle >= glitter_shredder_count*5){
-        updateGlitterAmount(truncate(glitter_shredder_count * 1)); // glitter shredder
-        updateNeedleAmount(-truncate(glitter_shredder_count * 5))
+        updateGlitterAmount(glitter_shredder_count * 1); // glitter shredder
+        updateNeedleAmount(-glitter_shredder_count * 5)
     }
+    if(glitter_factory_count > 0 || glitter_shredder_count > 0){move();}
 }, 1000);
+
+var i = 0;
+function move() {
+  if (i == 0) {
+    i = 1;
+    var elem = document.getElementById("factory_bar");
+    var width = 1;
+    var id = setInterval(frame, 5);
+    // eslint-disable-next-line no-inner-declarations
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+        i = 0;
+      } else {
+        width++;
+        elem.style.width = width + "%";
+      }
+    }
+  }
+} 

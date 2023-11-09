@@ -30,13 +30,14 @@
         <h1 class="display-5" style="user-select: none;" id="needle_amount">N 0</h1>
       </div>
       <div
-        class="row"
+        class="row mb-3"
         style="
           display: flex;
           flex-direction: row;
           align-items: center;
           justify-content: center;
           gap: 5px;
+          min-height:60vh;
         "
       >
         <div
@@ -51,10 +52,29 @@
                     <h1 class="display-1" style="user-select: none;"onClick="updateNeedleAmount(1)">N</h1>
                 </div>
             </div>
-            <div class="row">
-                <h1>I investment</h1>
-                <button onClick="buyGlitterFactory(1)">G Factory [<span>20 G</span>] -- <span id="glitter_factory_amount">0</span></button>
-                <button onClick="buyGlitterShredder(1)">G Shredder [<span>500 G</span>] -- <span id="glitter_shredder_amount">0</span></button>
+            <div class="row" style="padding:10px;">
+                <div class="col mx-2" style="padding:10px;">
+                  <h1>I investment</h1>
+                  <button onClick="buyGlitterFactory(1)">GF factory [<span>20 G</span>] -- <span id="glitter_factory_amount">0</span></button>
+                  <button onClick="buyGlitterShredder(1)">GS shredder [<span>500 G</span>] -- <span id="glitter_shredder_amount">0</span></button>
+                </div>
+                <div class="col mx-2" style="padding:10px;visibility:hidden;" id="monitor">
+                  <h1>M monitoring</h1>
+                  <div class="bar_container" id="glitter_factory_bar">
+                    <span>GF</span>
+                    <div id="progress" class="myProgress">
+                      <div id="factory_bar" class="myBar">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="bar_container" id="glitter_shredder_bar">
+                    <span>GS</span>
+                    <div id="progress" class="myProgress">
+                      <div id="shredder_bar" class="myBar">
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
         </div>
         <div
